@@ -1,0 +1,5 @@
+INFO (hyperopt.mongoexp): Failed to load function passed to fmin from main script. Is it in your PYTHONPATH?
+INFO (hyperopt.mongoexp): job exception: No module named resnet_preprocessing
+INFO (hyperopt.mongoexp): Caught signal 2, shutting down.
+INFO (hyperopt.mongoexp): Caught signal 15, shutting down.
+INFO (hyperopt.mongoexp): job exception: 15

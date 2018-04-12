@@ -1069,7 +1069,7 @@ class MongoWorker(object):
                         domain = pickle.loads(blob)
                     except BaseException as e:
                         logger.info(
-                            'Error while unpickling. Try installing dill via "pip install dill" for enhanced pickling support.')
+                            'Failed to load function passed to fmin from main script. Is it in your PYTHONPATH?')
                         raise
                     worker_fn = domain.evaluate
                 else:
