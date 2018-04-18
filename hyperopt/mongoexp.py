@@ -1212,6 +1212,8 @@ def main_worker_helper(options, args):
                     sub_argv.append('--workdir=%s' % options.workdir)
                 if options.exp_key is not None:
                     sub_argv.append('--exp-key=%s' % options.exp_key)
+                if options.logfile is not None:
+                    sub_argv.append('--logfile=%s' % options.logfile)                    
                 proc = subprocess.Popen(sub_argv)
                 retcode = proc.wait()
                 proc = None
@@ -1247,10 +1249,12 @@ def main_worker_helper(options, args):
         mj = MongoJobs.new_from_connection_str(
             as_mongo_str(options.mongo) + '/jobs')
 
+        print("logging worker's info to %s" % options.logfile)
         mworker = MongoWorker(mj,
                               float(options.poll_interval),
                               workdir=options.workdir,
-                              exp_key=options.exp_key)
+                              exp_key=options.exp_key,
+                              logfilename=options.logfile)
         mworker.run_one(reserve_timeout=float(options.reserve_timeout))
     else:
         raise ValueError("N <= 0")
@@ -1297,6 +1301,11 @@ def main_worker():
                       default=None,
                       help="root workdir (default: load from mongo)",
                       metavar="DIR")
+    parser.add_option("--logfile",
+                      dest="logfile",
+                      default="logfile.txt",
+                      help="logfile for this worker (default: ./logfile.txt)",
+                      metavar='str')    
 
     (options, args) = parser.parse_args()
 
